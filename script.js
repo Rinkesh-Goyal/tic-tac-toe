@@ -31,7 +31,7 @@ const gameBoard=(()=>{
 const display=(()=>{
     const field=document.querySelectorAll(".index");
     const message=document.getElementById("msg");
-    const restart=document.getElementById("restart");
+    const restartElement=document.getElementById("restart");
     
     for(let i=0;i<field.length;i++){
         field[i].addEventListener('click',(e)=>{
@@ -41,12 +41,7 @@ const display=(()=>{
         })
     }
 
-    restart.addEventListener('click',(e)=>{
-        gameController.reset();
-        gameBoard.reset();
-        updateBoard();
-        setMessageElement("Player X's turn");
-    })
+    restartElement.addEventListener('click',restart)
 
     const updateBoard=()=>{
         for(let i=0;i<field.length;i++){
@@ -66,7 +61,7 @@ const display=(()=>{
         message.textContent = msg;
       };
 
-    return {setResultMessage,setMessageElement};
+    return {updateBoard,setResultMessage,setMessageElement};
 })();
 
 const gameController=(()=>{
@@ -83,9 +78,11 @@ const gameController=(()=>{
             isOver=true;
             //Add logic to reload
             // setTimeout(window.location.reload,500);
-            reset();
-            gameBoard.reset();
-            updateBoard();
+            // reset();
+            // gameBoard.reset();
+            // updateBoard();
+            setTimeout(restart,2000);
+            
             return;
         }
 
@@ -134,8 +131,15 @@ const gameController=(()=>{
         round=1;
         isOver=false;
     }
-
+            
     return{playRound,reset,getIsOver};
 
 })();
+
+function restart(){
+            gameController.reset();
+            gameBoard.reset();
+            display.updateBoard();
+            display.setMessageElement("Player X's turn");
+    }
 }
