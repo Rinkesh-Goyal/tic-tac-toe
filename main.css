@@ -1,0 +1,104 @@
+.header{
+    border-bottom: 4px solid; 
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.name{
+    display: inline;
+    width: 100%;
+    font-family: "Nunito", sans-serif;
+    font-size: 40px;
+    text-align: center;
+    font-weight: bold;
+    padding-right: 9%;
+}
+.button,
+.restart{
+    display:flex;
+    padding: 1%;
+    align-items:center;
+    justify-content:center;
+}
+.selection{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+button {
+    border-radius: 4px;
+    border: none;
+    position: relative;
+    background-color: #666699;
+    border: none;
+    font-size: 20px;
+    color: #FFFFFF;
+    padding: 10px;
+    width: auto;
+    text-align: center;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  
+  button:after {
+    content: "";
+    background: #5757a8;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px!important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+  }
+  
+  button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+  }
+
+.AI{
+    width: 50%;
+}
+
+
+.player-1{
+    font-family: "Shadows Into Light", cursive;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    width: 50%;
+    padding-bottom: 2%;
+}
+
+
+
+  .gameboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 454px;
+    height: auto;
+    border: 2px solid black;
+    margin: 0px auto;
+  }
+  .index {
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    font-size: 10rem;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
