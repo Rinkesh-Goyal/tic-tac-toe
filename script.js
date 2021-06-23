@@ -1,64 +1,138 @@
-const player=(sign)=>{
-    this.sign=sign; 
-    const getSign=()=>{
-        return this.sign;
-    }
-    return {getSign};
-};
 
-const GameBoard=()=>{
-    const gameboard=["","","","","","","","",""];
+window.onload=(event)=>{
 
-    let setIndex=(index,sign)=>{
-        gameboard[index]=sign;
-    }
 
-    let getIndex=()=>gameboard[index];
-    return{setIndex,getIndex}
+
+const Player=(sign)=>{
+    this.sign=sign;
+
+    const getSign=()=>{return sign;}
+    return{getSign};
 }
 
+const gameBoard=(()=>{
+    const board=["","","","","","","","",""];
 
-window.onload =function(){
-    const div=document.querySelectorAll(".index");
-    for(let i = 0;i<div.length;i++)
-        div[i].addEventListener('click',gameController);
+    const setField=(index,sign)=>{
+        board[index]=sign;
     }
-let round=1;
-let isOver=false;
 
-function gameController(e){
-    const playerX=player("X");
-    const playerO=player("O");
+    const getField=(index)=>{return board[index];}
+
+    const reset=()=>{
+        for(let i=0;i<board.length;i++){
+            board[i]="";
+        }
+    }
+
+    return{setField,getField,reset};
+})();
+
+const display=(()=>{
+    const field=document.querySelectorAll(".index");
+    const message=document.getElementById("msg");
+    const restart=document.getElementById("restart");
     
-    const play=(index)=>{
-        GameBoard.setIndex(index,getCurrentPlayer());
-        if(checkWinner(index)){
-            display.setMsg(getCurrentPlayer());
+    for(let i=0;i<field.length;i++){
+        field[i].addEventListener('click',(e)=>{
+            // console.log(typeof (e.target.dataset.index));
+            gameController.playRound(parseInt(e.target.dataset.index));
+            updateBoard();
+        })
+    }
+
+    restart.addEventListener('click',(e)=>{
+        gameController.reset();
+        gameBoard.reset();
+        updateBoard();
+        setMessageElement("Player X's turn");
+    })
+
+    const updateBoard=()=>{
+        for(let i=0;i<field.length;i++){
+            field[i].textContent=gameBoard.getField(i);
+        }
+    }
+
+    const setResultMessage = (winner) => {
+        if (winner === "Draw") {
+          setMessageElement("It's a draw!");
+        } else {
+          setMessageElement(`Player ${winner} has won!`);
+        }
+      };
+    
+      const setMessageElement = (msg) => {
+        message.textContent = msg;
+      };
+
+    return {setResultMessage,setMessageElement};
+})();
+
+const gameController=(()=>{
+    let round=1;
+    let isOver=false;
+    const playerX=Player('X');
+    const playerO=Player('O');
+
+    const playRound=(fieldIndex)=>{
+        gameBoard.setField(fieldIndex,getCurrentPlayer());
+
+        if(checkWinner(fieldIndex)){
+            display.setResultMessage(getCurrentPlayer());
             isOver=true;
+            //Add logic to reload
+            // setTimeout(window.location.reload,500);
             return;
         }
-        
+
         if(round===9){
-            display.setMsg("Draw");
+            display.setResultMessage('Draw');
             isOver=true;
             return;
         }
         round++;
-        display.setMsg(`Player ${getCurrentPlayer()}'s turn`);
+        // console.log(round);
+        display.setMessageElement(`Player ${getCurrentPlayer()}'s turn`);
+
+    };
+
+    const getCurrentPlayer=()=>{
+        
+        return round%2===1?playerX.getSign():playerO.getSign();
     }
 
-
-    const getCurrentPlayer=()=>round%2!==0? playerX.getSign() : playerO.getSign();
+    const checkWinner = (fieldIndex) => {
+        const winConditions = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
     
-    const checkWinner=(index)=>{
-        const winCond=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+        return winConditions
+          .filter((combination) => combination.includes(fieldIndex))
+          .some((possibleCombination) =>
+            possibleCombination.every(
+              (index) => gameBoard.getField(index) === getCurrentPlayer()
+            )
+          );
+      };
 
-
+    const getIsOver=()=>{
+        return isOver;
     }
 
+    const reset=()=>{
+        round=1;
+        isOver=false;
+    }
 
-    
-    console.log(e.target.dataset.index);
-    
+    return{playRound,reset,getIsOver};
+
+})();
 }
-

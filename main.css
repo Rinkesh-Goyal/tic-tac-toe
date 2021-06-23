@@ -14,7 +14,7 @@
     padding-right: 9%;
 }
 .button,
-.restart{
+#restart{
     display:flex;
     padding: 1%;
     align-items:center;
@@ -68,7 +68,7 @@ button {
 }
 
 
-.player-1{
+#msg{
     font-family: "Shadows Into Light", cursive;
     font-size: 25px;
     font-weight: bold;
@@ -88,13 +88,17 @@ button {
     margin: 0px auto;
   }
   .index {
+    display: grid;
     width: 150px;
     height: 150px;
     border: 1px solid black;
     font-size: 10rem;
-    text-align: center;
+    
+    align-content: center;
+    justify-content: center;
     cursor: pointer;
     user-select: none;
+    font-family: "Shadows Into Light", cursive;
   }
   
 * {
