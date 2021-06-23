@@ -1,7 +1,10 @@
 
 window.onload=(event)=>{
 
-
+const start=(()=>{
+    startMsg=document.getElementById("msg");
+    startMsg.textContent="Player X's turn";
+})();
 
 const Player=(sign)=>{
     this.sign=sign;

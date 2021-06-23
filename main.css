@@ -70,11 +70,12 @@ button {
 
 #msg{
     font-family: "Shadows Into Light", cursive;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
     text-align: center;
     width: 50%;
     padding-bottom: 2%;
+    padding-top: 2%;
 }
 
 
