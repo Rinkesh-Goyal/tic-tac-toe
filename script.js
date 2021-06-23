@@ -83,6 +83,9 @@ const gameController=(()=>{
             isOver=true;
             //Add logic to reload
             // setTimeout(window.location.reload,500);
+            reset();
+            gameBoard.reset();
+            updateBoard();
             return;
         }
 
