@@ -74,30 +74,27 @@ const gameController=(()=>{
     const playerO=Player('O');
 
     const playRound=(fieldIndex)=>{
-        gameBoard.setField(fieldIndex,getCurrentPlayer());
+        if(gameBoard.getField(fieldIndex)==""){
+            gameBoard.setField(fieldIndex,getCurrentPlayer());
 
-        if(checkWinner(fieldIndex)){
-            display.setResultMessage(getCurrentPlayer());
-            isOver=true;
-            //Add logic to reload
-            // setTimeout(window.location.reload,500);
-            // reset();
-            // gameBoard.reset();
-            // updateBoard();
-            setTimeout(restart,2000);
+            if(checkWinner(fieldIndex)){
+                display.setResultMessage(getCurrentPlayer());
+                isOver=true;
             
-            return;
-        }
+                setTimeout(restart,2000);
+            
+                return;
+            }
 
-        if(round===9){
-            display.setResultMessage('Draw');
-            isOver=true;
-            return;
+            if(round===9){
+               display.setResultMessage('Draw');
+               isOver=true;
+               return;
+            }
+            round++;
+            // console.log(round);
+            display.setMessageElement(`Player ${getCurrentPlayer()}'s turn`);
         }
-        round++;
-        // console.log(round);
-        display.setMessageElement(`Player ${getCurrentPlayer()}'s turn`);
-
     };
 
     const getCurrentPlayer=()=>{
